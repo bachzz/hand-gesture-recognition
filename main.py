@@ -4,12 +4,16 @@ import pickle
 import time
 
 from keras.models import load_model
+from keras.models import model_from_json
 
 # model = load_model('mnist-model.f5')
 # lb = pickle.load(open("lb.h5","rb"))
-model = load_model('asl-model.f5')
+json_file = open("model.json", "r")
+model = model_from_json(json_file.read())
+model.load_weights("model_weights.h5")
+# model._make_predict_function()
 
-img_tmp = cv2.imread("./pics/space1.jpg")
+img_tmp = cv2.imread("./pics/A_test.jpg")
 img_tmp = cv2.resize(img_tmp, (64,64)) 
 img_tmp = np.expand_dims(img_tmp,axis=0)
 
@@ -61,15 +65,19 @@ while(True):
     imgCrop = np.expand_dims(imgCrop, axis=0)
     
     
-    print(img_tmp.shape)
+    # print(img_tmp.shape)
 
 
-    print(imgCrop.shape)
-    pred = np.round(model.predict(img_tmp)).astype(bool)
+    # print(imgCrop.shape)
+
+    pred = model.predict(imgCrop)
+    # print(pred)
+    # pred = np.round(pred).astype(bool)
 
     # print(pred)
     # print(pred[0])
-    print(alphabet[pred[0]])
+    # print(alphabet[pred[0]])
+    print(alphabet[np.argmax(pred)])
     # print(np.ma.masked_array(alphabet, pred[0]))
     # print(imgCrop)
     # x_tmp = imgCrop.reshape(-1,28,28,1)
