@@ -7,7 +7,7 @@ from keras.models import load_model
 from keras.models import model_from_json
 
 # model = load_model('mnist-model.f5')
-# lb = pickle.load(open("lb.h5","rb"))
+lb = pickle.load(open("lb.h5","rb"))
 json_file = open("model.json", "r")
 model = model_from_json(json_file.read())
 model.load_weights("model_weights.h5")
@@ -26,18 +26,27 @@ cap = cv2.VideoCapture(0)
 
 ##### MNIST #####
 
-# alphabet = np.array(["A","B","C","D","E","F","G","H","I","K","L","M",
-#             "N","O","P","Q","R","S","T","U","V","W","X","Y"])
-# print(len(alphabet))
+alphabet = np.array(["A","B","C","D","E","F","G","H","I","J","K","L","M",
+            "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"])
+# alphabet = {
+#     "A":0, "B":1, "C":2, "D":3, "E":4, "F": 5,
+#     "G":6, "H":7, "I":8, "K":10, "L":11, "M":12,
+#     "N":13, "O":14, "P":15, "Q":16, "R":17, "S": 18,
+#     "T":19, "U":20, "V":21, "W":22, "X":23, "Y":24
+
+#     0:"A",1:"B",
+# }
+
+print(len(alphabet))
 
 ########
 
 
 ##### ASL #####
 
-alphabet = np.array(["A","B","C","D","E","F","G","H","I","J","K","L","M",
-            "N","O","P","Q","R","S","T","U","V","W","X","Y","Z","del","nothing","space"])
-print(len(alphabet))
+# alphabet = np.array(["A","B","C","D","E","F","G","H","I","J","K","L","M",
+#             "N","O","P","Q","R","S","T","U","V","W","X","Y","Z","del","nothing","space"])
+# print(len(alphabet))
 
 ##############
 
@@ -50,16 +59,18 @@ while(True):
     color = (255, 0, 0)
     thickness = 2
 
-    # img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img = cv2.rectangle(img, (x,y), (x+w, y+h), color, thickness) 
 
     imgCrop = img[y:y+h, x:x+w]
-    # imgCrop = cv2.resize(imgCrop, (28,28)) 
-    imgCrop = cv2.resize(imgCrop, (64,64)) 
-    cv2.imshow('crop',imgCrop)
+    imgCrop = cv2.resize(imgCrop, (28,28)) 
+    # imgCrop = cv2.resize(imgCrop, (64,64)) 
 
-    imgCrop = np.expand_dims(imgCrop, axis=0)
-    # imgCrop = imgCrop.reshape(1,28,28,1)
+    # imgCrop = np.expand_dims(imgCrop, axis=0)
+    imgCrop = imgCrop / 255
+    # print(imgCrop)
+    cv2.imshow('crop',imgCrop)
+    imgCrop = imgCrop.reshape(1,28,28,1)
     
     # print(img_tmp.shape)
 
@@ -73,7 +84,8 @@ while(True):
     # print(pred)
     # print(pred[0])
     # print(np.argmax(pred))
-    print(alphabet[np.argmax(pred)])
+    print(alphabet[lb.inverse_transform(pred)[0] ])
+    # print(alphabet[np.argmax(pred)])
     # print(np.ma.masked_array(alphabet, pred[0]))
     # print(imgCrop)
     # x_tmp = imgCrop.reshape(-1,28,28,1)
