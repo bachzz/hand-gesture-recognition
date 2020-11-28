@@ -41,12 +41,12 @@ while (True):
     imgCrop = cv2.resize(imgCrop, (28, 28))
     # imgCrop = cv2.resize(imgCrop, (64,64)) 
 
-    character = 'Y'
+    character = 'Q'
     ### CAPTURE DATA ###
     key_pressed = cv2.waitKey(1) & 0xFF
     if key_pressed == ord('s'):
         count += 1
-        print("haha " + str(count))
+        print("haha " + character +str(count))
         outpath = "./data/" + character + '/' + character + str(count) + ".jpg"  ### change path HERE
         cv2.imwrite(outpath, imgCrop)
     elif key_pressed == ord('q'):
