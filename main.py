@@ -30,7 +30,7 @@ while(True):
     # Capture frame-by-frame
     ret, img = cap.read()
     
-    x, y, w, h = 100, 100, 200, 200
+    x, y, w, h = 100, 100, 250, 250
 
     color = (255, 0, 0)
     thickness = 2
@@ -48,7 +48,7 @@ while(True):
     if key_pressed == ord('s'):
         count += 1
         print("haha "+ str(count))
-        outpath = "./data/F/F"+str(count)+".jpg" ### change path HERE
+        outpath = "/home/hoainam/Class-ICT/semester9/cv/hand-gesture-recognition/data/O/O"+str(count)+".jpg" ### change path HERE
         cv2.imwrite(outpath, imgCrop)
     elif key_pressed == ord('q'):
         break
