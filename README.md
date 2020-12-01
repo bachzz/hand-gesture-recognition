@@ -17,5 +17,5 @@ Translating hand gestures to English letters
 - Web app:
     - front-end ?
     - back-end ?
-        - web server
+        - web server (run test.py file to generate base64 code for image)
         - CPU or GPU spec?

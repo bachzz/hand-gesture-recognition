@@ -1,0 +1,6 @@
+Letter :F.txt Total sample: 428 - Correct prediction 428 - Accuracy: 1.0
+Letter :D.txt Total sample: 426 - Correct prediction 189 - Accuracy: 0.44366197183098594
+Letter :C.txt Total sample: 426 - Correct prediction 411 - Accuracy: 0.9647887323943662
+Letter :A.txt Total sample: 428 - Correct prediction 339 - Accuracy: 0.7920560747663551
+Letter :B.txt Total sample: 426 - Correct prediction 409 - Accuracy: 0.960093896713615
+Letter :E.txt Total sample: 436 - Correct prediction 338 - Accuracy: 0.7752293577981652
