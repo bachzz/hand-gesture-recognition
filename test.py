@@ -5,15 +5,17 @@ import os
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
 
-alphabet =["A","B","C","D","E","F","G","H","I","J","K","L","M",
-            "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+            "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
 
 # Test every character in the alphabet
-for i in range(len(alphabet)):
+for i in range(10,len(alphabet)):
     character = alphabet[i]
+    print("Checking character {}!\n".format(character))
     path = os.getcwd()
     path = os.path.join(path, "data", character)
-
+    if not os.path.exists(path):
+        continue
     base64_list = []
     for image in os.listdir(path):
         image_path = os.path.join(path, image)
@@ -24,7 +26,7 @@ for i in range(len(alphabet)):
         # print(img_base64)
         base64_list.append(img_base64)
 
-    return_value = [] # The base64 for all image of a character
+    return_value = []  # The base64 for all image of a character
 
     # Make request to server and receive prediction result
     for j in range(len(base64_list)):
@@ -33,9 +35,9 @@ for i in range(len(alphabet)):
         post_fields = {'image': base64_list[j]}  # Set POST fields here
 
         request = Request(url, urlencode(post_fields).encode())
-        json = urlopen(request, timeout=3000).read().decode() # Prediction
+        json = urlopen(request, timeout=3000).read().decode()  # Prediction
         return_value.append(json)
-        print(json)
+        # print(json)
     # File to store the predict result of each character
     result_file = os.path.join(os.getcwd(), "test_result", character + ".txt")
     with open(result_file, 'w') as f:
