@@ -16,7 +16,7 @@ chars = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
 
 # cur: 17,R -> 24,Y
 
-for i in range(6,17):
+for i in range(0,25):
     if i != 9:
         for dirname, _, filenames in os.walk('./data/'+chars[i]+'/'):
             for filename in filenames:

@@ -2,7 +2,7 @@ import numpy as np
 import cv2
 import pickle
 import time
-
+import os
 from keras.models import load_model
 from keras.models import model_from_json
 
@@ -24,6 +24,9 @@ alphabet = np.array(["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
 print(len(alphabet))
 
 count = 0
+path = './data'
+
+prev_key = 0
 
 while (True):
     # Capture frame-by-frame
@@ -41,16 +44,26 @@ while (True):
     imgCrop = cv2.resize(imgCrop, (28, 28))
     # imgCrop = cv2.resize(imgCrop, (64,64)) 
 
-    character = 'Q'
+    # character = 'E'
+    
     ### CAPTURE DATA ###
     key_pressed = cv2.waitKey(1) & 0xFF
-    if key_pressed == ord('s'):
+    
+    if key_pressed in range(97,123):
+        if key_pressed != prev_key:
+            count = 0
+
+        character = chr(key_pressed).upper()
         count += 1
         print("haha " + character +str(count))
         outpath = "./data/" + character + '/' + character + str(count) + ".jpg"  ### change path HERE
+        folder_path = os.path.join(path,character)
+        if not os.path.isdir(folder_path):
+            os.mkdir(folder_path)
         cv2.imwrite(outpath, imgCrop)
-    elif key_pressed == ord('q'):
-        break
+        prev_key = key_pressed
+    # elif key_pressed == ord('q'):
+    #     break
     ####################
 
     imgCrop = imgCrop / 255

@@ -4,12 +4,17 @@ import base64
 import os
 from urllib.parse import urlencode
 from urllib.request import Request, urlopen
+from http.client import IncompleteRead
 
-alphabet =["A","B","C","D","E","F","G","H","I","J","K","L","M",
-            "N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+alphabet =["A","B","C","D","E","F","G","H","I","_","K","L","M",
+            "N","O","P","Q","R","S","T","U","V","W","X","Y","_"]
 
 # Test every character in the alphabet
 for i in range(len(alphabet)):
+    
+    if alphabet[i] == "_":
+        continue
+
     character = alphabet[i]
     path = os.getcwd()
     path = os.path.join(path, "data", character)
@@ -33,7 +38,12 @@ for i in range(len(alphabet)):
         post_fields = {'image': base64_list[j]}  # Set POST fields here
 
         request = Request(url, urlencode(post_fields).encode())
-        json = urlopen(request, timeout=3000).read().decode() # Prediction
+        
+        try:
+            json = urlopen(request, timeout=3000).read().decode() # Prediction
+        except IncompleteRead:
+            continue
+
         return_value.append(json)
         print(json)
     # File to store the predict result of each character
