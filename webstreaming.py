@@ -1,9 +1,6 @@
 # USAGE
 # python webstreaming.py --ip 0.0.0.0 --port 8000
 
-# import the necessary packages
-#from pyimagesearch.face_blurring import anonymize_face_pixelate
-#from pyimagesearch.face_blurring import anonymize_face_simple
 from imutils.video import VideoStream
 import numpy as np
 from flask import Response
@@ -45,21 +42,24 @@ def hand_recongize(frameCount):
 	while (True):
     # Capture frame-by-frame
 		img = vs.read()
-		width = 800
-		height = 550
+		width = 1200
+		height = 600
 		dim = (width, height)
 		img = cv2.resize((img), dim)
 		x, y , w, h = 100, 100, 200, 200
-		
+		x1, y1, w1, h1 = 30, 30, 40, 40
 		color = (255, 0, 0)
 		thickness = 2
 
 		img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-		img = cv2.rectangle(img, (x, y), (x + w, y + h), color, thickness)
+		img = cv2.rectangle(img, (x, y), (x + w, y + h), (36,255,12),  thickness)
 
 		imgCrop = img[y:y + h, x:x + w]
 		imgCrop = cv2.resize(imgCrop, (28, 28))
     	# imgCrop = cv2.resize(imgCrop, (64,64)) 
+
+	#	numberDisplay = cv2.rectangle(img, (x1, y1) + (x1 + w1, y1 + h1), color, thickness)
+	#	number = img[y1:y1 + h1, x1:x1 + w1]
 
 		character = 'Q'
     ### CAPTURE DATA ###
@@ -80,7 +80,9 @@ def hand_recongize(frameCount):
 
 		pred = model.predict(imgCrop)
 		print(alphabet[lb.inverse_transform(pred)[0]])
-
+		number = alphabet[lb.inverse_transform(pred)[0]]
+	#	img[y1:y1 + h1, x1:x1 + w1] = number
+		cv2.putText(img, number, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
 		with lock:
 			outputFrame = img.copy()
 
@@ -93,10 +95,7 @@ def generate():
 
 	# loop over frames from the output stream
 	while True:
-		# wait until the lock is acquired
 		with lock:
-			# check if the output frame is available, otherwise skip
-			# the iteration of the loop
 			if outputFrame is None:
 				continue
 
@@ -118,7 +117,6 @@ def video_feed():
 	return Response(generate(),
 		mimetype = "multipart/x-mixed-replace; boundary=frame")
 
-# check to see if this is the main thread of execution
 if __name__ == '__main__':
 	# construct the argument parser and parse command line arguments
 	ap = argparse.ArgumentParser()
@@ -136,10 +134,8 @@ if __name__ == '__main__':
 		help="minimum probability to filter weak detections")
 	args = vars(ap.parse_args())
 
-	# load our serialized face detector model from disk
-	print("[INFO] loading face detector model...")
-	#prototxtPath = os.path.sep.join([args["face"], "deploy.prototxt"])
-	#weightsPath = os.path.sep.join([args["face"],"res10_300x300_ssd_iter_140000.caffemodel"])
+	print("[INFO] loading  model...")
+
 	
 	lbPath = os.path.sep.join([args["model"], "lb.h5"])
 	jsonPath = os.path.sep.join([args["model"], "model.json"])
@@ -155,10 +151,8 @@ if __name__ == '__main__':
 	# initialize the video stream and allow the camera sensor to warm up
 	print("[INFO] starting video stream...")
 	vs = VideoStream(src=0).start()
-#	vs = cv2.VideoCapture(0)
 	time.sleep(2.0)
 
-	# start a thread that will perform motion detection
 	t = threading.Thread(target=hand_recongize, args=(
 		args["frame_count"],))
 	t.daemon = True
