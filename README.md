@@ -19,3 +19,8 @@ Translating hand gestures to English letters
     - back-end ?
         - web server (run test.py file to generate base64 code for image)
         - CPU or GPU spec?
+
+## Run server
+- python webstreaming.py --ip 0.0.0.0 --port 8000 --model model
+
+
