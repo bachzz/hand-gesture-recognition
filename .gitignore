@@ -130,3 +130,7 @@ dmypy.json
 
 #git rewrite
 .git-rewrite/
+
+#large file
+
+sign_mnist_train_custom.csv
