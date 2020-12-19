@@ -38,3 +38,30 @@ Translating hand gestures to English letters
         - web server (run test.py file to generate base64 code for image)
         - CPU or GPU spec?
 - report
+
+#### Optional
+
+- setup heroku (`brew install heroku`)
+- Use a python virtualenv
+
+#### Required
+- `git clone https://github.com/dxue2012/python-webcam-flask.git`
+- `pip install -r requirements.txt`
+
+### Run locally
+
+IF YOU HAVE HEROKU:
+- `heroku local`
+IF NOT:
+- `gunicorn -k eventlet -w 1 app:app --log-file=-`
+
+- in your browser, navigate to localhost:5000
+
+### Deploy to heroku
+
+- `git push heroku master`
+- heroku open
+
+### Common Issues
+
+If you run into a 'protocol not found' error, see if [this stackoverflow answer helps](https://stackoverflow.com/questions/40184788/protocol-not-found-socket-getprotobyname).

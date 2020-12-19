@@ -1,14 +1,10 @@
-from PIL import Image, ImageDraw
-# import Image, ImageDraw
-
 import cv2
 import pickle
 import time
 import numpy as np
-from keras.models import load_model
 from keras.models import model_from_json
 
-# model = load_model('mnist-model.f5')
+
 lb = pickle.load(open("lb.h5", "rb"))
 json_file = open("model.json", "r")
 model = model_from_json(json_file.read())
@@ -32,7 +28,5 @@ class Makeup_artist(object):
 
         pred = model.predict(imgCrop)
         cv2.putText(img, alphabet[lb.inverse_transform(pred)[0]], (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
-        # draw = ImageDraw.Draw(img)
-        # draw.rectangle(((0, 0), (100, 100)), fill=None,outline="white",width =1)
         img = cv2.rectangle(img, (x, y), (x + w, y + h), color, thickness)
         return img
