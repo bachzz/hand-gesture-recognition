@@ -43,6 +43,6 @@ class Camera(object):
         self.to_process.append(input)
 
     def get_frame(self):
-        while not self.to_output:
-            sleep(0.05)
+        if not self.to_output:
+            return None        
         return self.to_output.pop(0)

@@ -6,17 +6,17 @@ from flask_socketio import SocketIO, emit
 from camera import Camera
 from utils import base64_to_pil_image, pil_image_to_base64
 from flask_cors import CORS
+import threading
 
-
-host = '0.0.0.0'
-port = 8080
+host = '127.0.0.1'#'0.0.0.0'
+port = '8000'#8080
 
 app = Flask(__name__)
 CORS(app)
 app.logger.addHandler(logging.StreamHandler(stdout))
 app.config['SECRET_KEY'] = 'secret!'
 app.config['DEBUG'] = True
-socketio = SocketIO(app, cors_allowed_origins='*')
+socketio = SocketIO(app, cors_allowed_origins='*')#, async_mode='eventlet')
 camera = Camera(Makeup_artist())
 
 
@@ -24,39 +24,28 @@ camera = Camera(Makeup_artist())
 def test_message(input):
     input = input.split(",")[1]
     camera.enqueue_input(input)
-    image_data = camera.get_frame() # Do your magical Image processing here!!
-    image_data = image_data.decode("utf-8")
-    image_data = "data:image/jpeg;base64," + image_data
-    # print("OUTPUT " + image_data)
-    emit('out-image-event', {'image_data': image_data}, namespace='/test')
-    #camera.enqueue_input(base64_to_pil_image(input))
 
-
+import time
 @socketio.on('connect', namespace='/test')
-def test_connect():
+def connect():
+    socketio.start_background_task(target=lambda: worker())
     app.logger.info("client connected")
+
+def worker():
+    while True:
+        image_data = camera.get_frame() # Do your magical Image processing here!!
+        while not image_data:
+            image_data = camera.get_frame()
+            socketio.sleep(0.05)
+        image_data = image_data.decode("utf-8")
+        image_data = "data:image/jpeg;base64," + image_data
+        socketio.emit('out-image-event', {'image_data': image_data}, namespace='/test')
 
 
 @app.route('/')
 def index():
     """Video streaming home page."""
     return render_template('index.html')
-
-
-def gen():
-    """Video streaming generator function."""
-
-    app.logger.info("starting to generate frames!")
-    while True:
-        frame = camera.get_frame() #pil_image_to_base64(camera.get_frame())
-        yield (b'--frame\r\n'
-               b'Content-Type: image/jpeg\r\n\r\n' + frame + b'\r\n')
-
-
-@app.route('/video_feed')
-def video_feed():
-    """Video streaming route. Put this in the src attribute of an img tag."""
-    return Response(gen(), mimetype='multipart/x-mixed-replace; boundary=frame')
 
 
 if __name__ == '__main__':
