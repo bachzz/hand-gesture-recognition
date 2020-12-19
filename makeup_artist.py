@@ -1,14 +1,10 @@
-from PIL import Image, ImageDraw
-# import Image, ImageDraw
-
 import cv2
 import pickle
 import time
 import numpy as np
-from keras.models import load_model
 from keras.models import model_from_json
 
-# model = load_model('mnist-model.f5')
+
 lb = pickle.load(open("lb.h5", "rb"))
 json_file = open("model.json", "r")
 model = model_from_json(json_file.read())

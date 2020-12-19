@@ -45,8 +45,11 @@ def worker():
 @app.route('/')
 def index():
     """Video streaming home page."""
-    return render_template('index.html')
+
+    return render_template('index2.html')
+
 
 
 if __name__ == '__main__':
     socketio.run(app, host=host, port=port)
+
