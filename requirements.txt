@@ -39,8 +39,8 @@ Pillow==8.0.1
 protobuf==3.14.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-python-engineio==1.7.0
-python-socketio==1.7.7
+python-engineio==3.13.2
+python-socketio==4.6.0
 PyYAML==5.3.1
 redis==3.5.3
 requests==2.25.0
@@ -61,3 +61,4 @@ Werkzeug==1.0.1
 wrapt==1.12.1
 zope.event==4.5.0
 zope.interface==5.2.0
+opencv-python-headless==4.2.0.32

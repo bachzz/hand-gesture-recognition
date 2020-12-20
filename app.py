@@ -36,7 +36,7 @@ def worker():
         image_data = camera.get_frame() # Do your magical Image processing here!!
         while not image_data:
             image_data = camera.get_frame()
-            socketio.sleep(0.05)
+            socketio.sleep(0.005)
         image_data = image_data.decode("utf-8")
         image_data = "data:image/jpeg;base64," + image_data
         socketio.emit('out-image-event', {'image_data': image_data}, namespace='/test')

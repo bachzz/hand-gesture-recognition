@@ -11,17 +11,13 @@ $(document).ready(function(){
   var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 
   function sendSnapshot() {
-    // console.log('sent!1');
     if (!localMediaStream) {
       return;
     }
-    // console.log('sent2!');
     ctx.drawImage(video, 0, 0, video.videoWidth, video.videoHeight, 0, 0, 300, 150);
-    // console.log('before sent!');
     dataURL = canvas.toDataURL('image/jpeg');
     socket.emit('input image', dataURL);
     console.log('sent!');
-    // socket.emit('output image');
 
 
   }
@@ -55,7 +51,7 @@ $(document).ready(function(){
 
     setInterval(function () {
       sendSnapshot();
-    }, 500);
+    }, 300);
   }).catch(function(error) {
     console.log(error);
   });
