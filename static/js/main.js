@@ -2,9 +2,14 @@ $(document).ready(function(){
   let namespace = "/test";
   let video = document.querySelector("#videoElement");
   let canvas = document.querySelector("#canvasElement");
+  let result = document.querySelector("#result");
+  let save_btn = document.querySelector("#save-btn");
+  let clear_btn = document.querySelector("#clear-btn");
+
   let ctx = canvas.getContext('2d');
   photo = document.getElementById('photo');
   var localMediaStream = null;
+  var curLetter = null;
 
   let dataURL = canvas.toDataURL('image/jpeg');
 
@@ -35,7 +40,7 @@ $(document).ready(function(){
     var img = new Image();
     img.src = dataURL;//data.image_data
     photo.setAttribute('src', data.image_data);
-
+    curLetter = data.letter;
   });
 
   var constraints = {
@@ -55,5 +60,12 @@ $(document).ready(function(){
   }).catch(function(error) {
     console.log(error);
   });
+
+  save_btn.onclick = function(){
+    result.innerHTML += curLetter;
+  }  
+  clear_btn.onclick = function(){
+    result.innerHTML = "";
+  }  
 });
 

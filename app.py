@@ -37,16 +37,17 @@ def worker():
         while not image_data:
             image_data = camera.get_frame()
             socketio.sleep(0.005)
-        image_data = image_data.decode("utf-8")
-        image_data = "data:image/jpeg;base64," + image_data
-        socketio.emit('out-image-event', {'image_data': image_data}, namespace='/test')
+        image = image_data[0].decode("utf-8")
+        letter = image_data[1]
+        image = "data:image/jpeg;base64," + image
+        socketio.emit('out-image-event', {'image_data': image,'letter':letter}, namespace='/test')
 
 
 @app.route('/')
 def index():
     """Video streaming home page."""
 
-    return render_template('index2.html')
+    return render_template('index.html')
 
 
 

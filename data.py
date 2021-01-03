@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import pandas as pd
 
 df_train = pd.read_csv("sign_mnist_train_custom.csv")
+df_train = df_train[0:0]
 
 count = 0
 shape_before = df_train.shape
@@ -51,7 +52,8 @@ for i in range(0,25):
 print(shape_before)
 print(count)
 print(df_train.shape)
-df_train.to_csv("sign_mnist_train_custom2.csv",index=False)
+# df_train.to_csv("sign_mnist_train_custom2.csv",index=False)
+df_train.to_csv("sign_mnist_test_custom.csv",index=False)
 
 # fig,axe=plt.subplots(2,2)
 # fig.suptitle('Preview of dataset')

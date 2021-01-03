@@ -1,54 +1,108 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta content="ugh, hi." name="description">
-        <meta content="Makeup Webcam" name="title">
-        <title>Face Detection</title>
-        <style>
-         #container {
-             margin: 0px auto;
-             border: 10px #333 solid;
-         }
-         #videoElement {
-             width: 640px;
-             height: 480px;
-             display: none;
-             background-color: #666;
-         }
+  <head>
+    <meta charset="utf-8" />
+    <meta content="ugh, hi." name="description" />
+    <meta content="Makeup Webcam" name="title" />
+    <script src="jquery-3.5.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
 
-         #imageElement {
-             width: 640px;
-             height: 480px;
-             background-color: #666;
-         }
+    <title>SignLearner</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #header {
+        font-size: 36px;
+        font-weight: 30;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: sans-serif;
+      }
+      #container {
+        margin: 0px auto;
+        /* border: 10px #333 solid; */
+        text-align: center;
+      }
+      #videoElement {
+        width: 640px;
+        height: 480px;
+        display: none;
+        background-color: #666;
+      }
 
-         #canvasElement {
-             width: 640px;
-             height: 480px;
-             border: 1px solid black;
-         }
-         #photo {
-             width: 640px;
-             height: 480px;
+      #imageElement {
+        width: 640px;
+        height: 480px;
+        background-color: #666;
+      }
 
-             border: 1px solid black;
-         }
-        </style>
-    </head>
-    <body>
-        <div id="container">
-            <div>
-            <video autoplay="true" id="videoElement"></video>
-                <canvas id="canvasElement"></canvas>
+      #canvasElement {
+        width: 640px;
+        height: 480px;
+        border: 1px solid black;
+      }
+      #photo {
+        position: relative;
+        float: left;
+        width: 50%;
+        height: 480px;
 
-                <img id="photo">
-            </div>
-        </div>
+        border: 1px solid black;
+      }
+      #alphabet {
+        position: relative;
+        float: left;
+        width: 50%;
+        height: 480px;
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
+        border: 1px solid black;
+      }
+
+      #result {
+        border: 1px solid black;
+      }
+
+      canvas#canvasElement {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="header">Hand gesture recognition</div>
+    <div id="container">
+      <div>
+        <video autoplay="true" id="videoElement"></video>
+        <canvas id="canvasElement"></canvas>
+
+        <img id="photo" />
+      </div>
+      <div>
+        <img id="alphabet" src="{{ url_for('static', filename='img.jpg') }}" />
+      </div>
+
+
+      <button type="button" class="btn btn-info btn-lg" id="save-btn">
+        Save
+      </button>
+
+      <button type="button" class="btn btn-info btn-lg" id="clear-btn">
+        Clear
+      </button>
+
+      <div id="result">
+      </div>
+      
+    </div>
+   <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
         <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    </body>
+  </body>
 </html>

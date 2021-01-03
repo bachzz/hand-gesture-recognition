@@ -27,7 +27,7 @@ class Makeup_artist(object):
         imgCrop = imgCrop.reshape(1, 28, 28, 1)
 
         pred = model.predict(imgCrop)
-
-        cv2.putText(img, alphabet[lb.inverse_transform(pred)[0]], (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
+        letter = alphabet[lb.inverse_transform(pred)[0]]
+        cv2.putText(img, letter, (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (36,255,12), 2)
         img = cv2.rectangle(img, (x, y), (x + w, y + h), color, thickness)
-        return img
+        return img, letter
