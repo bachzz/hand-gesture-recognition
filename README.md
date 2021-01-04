@@ -1,11 +1,12 @@
 # hand-gesture-recognition
 Translating hand gestures to English letters
 
+![demo preview](./pics/demo.png)
+
 ## Roles
-- Bach: generate data + preprocess data + model
-- Dat: generate data + web app 
-- H.Nam: generate data + web app
-- P.Nam: test models
+- Bach: Data capture, deep learning model build, web deploy
+- Dat: Data capture, build website, Random Forest classifier 
+- H.Nam: Website building and deployment
 
 ## Dataset:
   - Train data: 
@@ -24,29 +25,16 @@ Translating hand gestures to English letters
   - ref: https://www.kaggle.com/sayakdasgupta/sign-language-classification-cnn-99-40-accuracy
 
 ## Evaluation
-  - Test dataset: On-class
+  - Test dataset: On-class - sign_mnist_test_custom.csv
   - sign_mnist_train.csv:
     - ![eval_original](./pics/sign_mnist_original_eval.png)
   - sign_mnist_train_custom.csv:
     - ![eval_original](./pics/custom_eval.png)
 
 ## To-do
-- test other models (P.Name)
-- Web app: (Dat + H.Name)
-    - front-end ?
-    - back-end ?
-        - web server (run test.py file to generate base64 code for image)
-        - CPU or GPU spec?
-- report
+- Automatic detect hand gesture (localization)
+- Classify complex gestures (time series data) or hand animations using LSTM, GRU 
 
-#### Optional
-
-- setup heroku (`brew install heroku`)
-- Use a python virtualenv
-
-#### Required
-- `git clone https://github.com/dxue2012/python-webcam-flask.git`
-- `pip install -r requirements.txt`
 
 ### Run locally
 
