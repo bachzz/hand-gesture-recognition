@@ -40,7 +40,7 @@ $(document).ready(function(){
     var img = new Image();
     img.src = dataURL;//data.image_data
     photo.setAttribute('src', data.image_data);
-    curLetter = data.letter;
+    curLetter = data.letter ? data.letter : "test";
   });
 
   var constraints = {

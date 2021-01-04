@@ -5,6 +5,8 @@
     <meta content="ugh, hi." name="description" />
     <meta content="Makeup Webcam" name="title" />
     <script src="jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet"
+  href="https://fonts.googleapis.com/css?family=Electrolize">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link
@@ -14,16 +16,23 @@
 
     <title>SignLearner</title>
     <style>
+    body{
+     background: url(https://coolbackgrounds.io/images/backgrounds/index/compute-ea4c57a4.png);
+  background-position: left top;
+  background-repeat: repeat;
+
+    }
       * {
         margin: 0;
         padding: 0;
       }
       #header {
-        font-size: 36px;
+        font-size:3vw;
         font-weight: 30;
         text-align: center;
         text-transform: uppercase;
-        font-family: sans-serif;
+        font-family: Electrolize;
+        color: white;
       }
       #container {
         margin: 0px auto;
@@ -62,13 +71,41 @@
         width: 50%;
         height: 480px;
 
-        border: 1px solid black;
+        --x: 50%;
+	  --y: 50%;
+        border: 2px solid transparent;
+	    background: linear-gradient(#000, #000) padding-box, radial-gradient(farthest-corner at var(--x) var(--y), #00C9A7, #845EC2) border-box;
+
+        border-radius: 25px;
+      }
+      #buttonContainer {
+      margin-top : 25px;
+
+      }
+      #space{
+      min-height: 10px;
       }
 
       #result {
-        border: 1px solid black;
-      }
+      font-size:5vw;
+        text-align: center;
+        text-transform: uppercase;
+        font-family: sans-serif;
+        color: white;
+        padding-left:10px;
+        padding-right:10px;
+      --x: 50%;
+	  --y: 50%;
+        border: 2px solid transparent;
+	    background: linear-gradient(#000, #000) padding-box, radial-gradient(farthest-corner at var(--x) var(--y), #00C9A7, #845EC2) border-box;
 
+        border-radius: 25px;
+        min-width: 10vh;
+
+      }
+      #firstContainer {
+      min-height: 50vh;
+      }
       canvas#canvasElement {
         display: none;
       }
@@ -77,6 +114,7 @@
   <body>
     <div id="header">Hand gesture recognition</div>
     <div id="container">
+      <div id = firstContainer>
       <div>
         <video autoplay="true" id="videoElement"></video>
         <canvas id="canvasElement"></canvas>
@@ -86,6 +124,9 @@
       <div>
         <img id="alphabet" src="{{ url_for('static', filename='img.jpg') }}" />
       </div>
+    </div>
+      <div id ="space"></div>
+      <div id="buttonContainer">
 
 
       <button type="button" class="btn btn-info btn-lg" id="save-btn">
@@ -95,9 +136,11 @@
       <button type="button" class="btn btn-info btn-lg" id="clear-btn">
         Clear
       </button>
+        </div>
 
-      <div id="result">
-      </div>
+      <span id="result">
+
+      </span>
       
     </div>
    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g=" crossorigin="anonymous"></script>
