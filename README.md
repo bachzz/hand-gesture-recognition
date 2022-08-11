@@ -3,7 +3,6 @@ Translating hand gestures to English letters
 
 https://sign-language-app.herokuapp.com/
 
-![demo preview](./pics/demo.png)
 
 ## Roles
 - Bach: Data capture, deep learning model build, web deploy
